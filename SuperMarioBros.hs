@@ -5,15 +5,15 @@ data Plomero = Plomero {
     cajaDeHerramientas :: [Herramienta],
     historialReparaciones :: Int,
     cantidadDinero :: Int
-}
+} deriving (Show,Eq)
 
 data Herramienta = Herramienta {
     denominacion :: String,
     precio :: Int,
     materialEmpuniadura :: Material
-}
+} deriving (Show,Eq)
 
-data Material = Hierro | Madera | Goma | Plastico
+data Material = Hierro | Madera | Goma | Plastico deriving (Show,Eq)
 
 
 -- PUNTO 1 ======================================================
@@ -44,5 +44,17 @@ mario = Plomero {
     cantidadDinero = 1200
 }
 
+
 -- Falta Wario que parece que hay que usar una lista infinita
+
+-- PUNTO 2 ======================================================
+
+tieneHerramienta :: Herramienta -> Plomero -> Bool
+tieneHerramienta unaHerramienta unPlomero = elem unaHerramienta $ cajaDeHerramientas unPlomero
+
+esMalvado :: Plomero -> Bool
+esMalvado unPlomero = ("Wa" ==).take 2 $ nombre unPlomero
+
+puedeComprar :: Plomero -> Herramienta -> Bool
+puedeComprar unPlomero unaHerramienta = cantidadDinero unPlomero >= precio unaHerramienta
 
