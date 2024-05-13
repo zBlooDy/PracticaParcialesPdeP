@@ -2,13 +2,14 @@
 import Text.Show.Functions
 import Data.List(genericLength)
 import Data.Char(isUpper)
+import Distribution.Simple.Program.HcPkg (describeInvocation)
 
 data Plomero = Plomero {
     nombre :: String,
     cajaDeHerramientas :: [Herramienta],
-    historialReparaciones :: Int,
+    historialReparaciones :: [Reparacion],
     cantidadDinero :: Float
-} deriving (Show,Eq)
+} deriving (Show)
 
 data Herramienta = Herramienta {
     denominacion :: String,
@@ -43,7 +44,7 @@ llaveFrancesa = Herramienta {
 mario = Plomero {
     nombre = "Mario",
     cajaDeHerramientas = [llaveInglesa, martillo],
-    historialReparaciones = 0,
+    historialReparaciones = [],
     cantidadDinero = 1200
 }
 
@@ -87,3 +88,27 @@ quitaDinero unDinero  = mapDinero (subtract unDinero)
 
 mapDinero :: (Float -> Float) -> Plomero -> Plomero
 mapDinero f unPlomero = unPlomero {cantidadDinero = f $ cantidadDinero unPlomero}
+
+-- PUNTO 5 ======================================================
+
+data Reparacion = Reparacion {
+    descripcion :: String,
+    requirimiento :: Plomero -> Bool   
+} deriving (Show)
+
+--a) 
+filtracionAgua :: Reparacion
+filtracionAgua = Reparacion {
+    descripcion = "Filtracion de agua",
+    requirimiento = tieneHerramienta llaveInglesa 
+}
+
+--b)
+esDificil :: Reparacion -> Bool
+esDificil (Reparacion descripcion _) = length descripcion > 100 && todasMayusculas descripcion
+
+todasMayusculas = all isUpper 
+
+--c) 
+presupuestoReparacion :: Reparacion -> Float
+presupuestoReparacion (Reparacion descripcion _) = (*3). genericLength $ descripcion
