@@ -58,3 +58,9 @@ esMalvado unPlomero = ("Wa" ==).take 2 $ nombre unPlomero
 puedeComprar :: Plomero -> Herramienta -> Bool
 puedeComprar unPlomero unaHerramienta = cantidadDinero unPlomero >= precio unaHerramienta
 
+-- PUNTO 3 ======================================================
+
+esBuenaHerramienta (Herramienta _ precio Hierro) = precio >= 10000
+esBuenaHerramienta (Herramienta "Martillo" _ Madera) = True
+esBuenaHerramienta (Herramienta "Martillo" _ Goma) = True
+esBuenaHerramienta _ = False
