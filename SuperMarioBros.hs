@@ -1,15 +1,18 @@
 -- DATAS ======================================================
+import Text.Show.Functions
+import Data.List(genericLength)
+import Data.Char(isUpper)
 
 data Plomero = Plomero {
     nombre :: String,
     cajaDeHerramientas :: [Herramienta],
     historialReparaciones :: Int,
-    cantidadDinero :: Int
+    cantidadDinero :: Float
 } deriving (Show,Eq)
 
 data Herramienta = Herramienta {
     denominacion :: String,
-    precio :: Int,
+    precio :: Float,
     materialEmpuniadura :: Material
 } deriving (Show,Eq)
 
@@ -64,3 +67,23 @@ esBuenaHerramienta (Herramienta _ precio Hierro) = precio >= 10000
 esBuenaHerramienta (Herramienta "Martillo" _ Madera) = True
 esBuenaHerramienta (Herramienta "Martillo" _ Goma) = True
 esBuenaHerramienta _ = False
+
+-- PUNTO 4 ======================================================
+
+comprarHerramienta :: Plomero -> Herramienta -> Plomero
+comprarHerramienta unPlomero unaHerramienta 
+    | puedeComprar unPlomero unaHerramienta = quitaDinero (precio unaHerramienta) . agregaHerramienta unaHerramienta $ unPlomero
+    | otherwise                             = unPlomero
+
+
+agregaHerramienta :: Herramienta -> Plomero -> Plomero
+agregaHerramienta unaHerramienta  = mapHerramienta ((:) unaHerramienta) 
+
+mapHerramienta :: ([Herramienta] -> [Herramienta]) -> Plomero -> Plomero
+mapHerramienta f unPlomero = unPlomero {cajaDeHerramientas = f $ cajaDeHerramientas unPlomero}
+
+quitaDinero :: Float -> Plomero -> Plomero
+quitaDinero unDinero  = mapDinero (subtract unDinero) 
+
+mapDinero :: (Float -> Float) -> Plomero -> Plomero
+mapDinero f unPlomero = unPlomero {cantidadDinero = f $ cantidadDinero unPlomero}
