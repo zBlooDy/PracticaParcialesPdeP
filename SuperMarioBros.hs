@@ -2,7 +2,7 @@
 import Text.Show.Functions
 import Data.List(genericLength)
 import Data.Char(isUpper)
-import Distribution.Simple.Program.HcPkg (describeInvocation)
+import Data.ByteString (unpack)
 
 data Plomero = Plomero {
     nombre :: String,
@@ -93,22 +93,50 @@ mapDinero f unPlomero = unPlomero {cantidadDinero = f $ cantidadDinero unPlomero
 
 data Reparacion = Reparacion {
     descripcion :: String,
-    requirimiento :: Plomero -> Bool   
+    requerimiento :: Plomero -> Bool   
 } deriving (Show)
 
 --a) 
 filtracionAgua :: Reparacion
 filtracionAgua = Reparacion {
     descripcion = "Filtracion de agua",
-    requirimiento = tieneHerramienta llaveInglesa 
+    requerimiento = tieneHerramienta llaveInglesa 
 }
 
 --b)
 esDificil :: Reparacion -> Bool
 esDificil (Reparacion descripcion _) = length descripcion > 100 && todasMayusculas descripcion
-
+ 
 todasMayusculas = all isUpper 
 
 --c) 
 presupuestoReparacion :: Reparacion -> Float
 presupuestoReparacion (Reparacion descripcion _) = (*3). genericLength $ descripcion
+
+-- PUNTO 6 ======================================================
+
+hacerUnaReparacion :: Plomero -> Reparacion -> Plomero
+hacerUnaReparacion unPlomero unaReparacion
+    | puedeReparar unaReparacion unPlomero = agregaReparacion unaReparacion . aumentarDinero (presupuestoReparacion unaReparacion) $ unPlomero 
+    | otherwise = aumentarDinero 100 unPlomero
+
+
+puedeReparar :: Reparacion -> Plomero -> Bool
+puedeReparar unaReparacion unPlomero = requerimiento unaReparacion unPlomero || esMalvado unPlomero && tieneHerramienta martillo unPlomero
+
+aumentarDinero :: Float -> Plomero -> Plomero
+aumentarDinero unDinero = mapDinero (+ unDinero) 
+
+agregaReparacion :: Reparacion -> Plomero -> Plomero
+agregaReparacion unaReparacion unPlomero = unPlomero {historialReparaciones = unaReparacion : historialReparaciones unPlomero}
+
+cambiaHerramientas :: Plomero -> Reparacion -> Plomero
+cambiaHerramientas unPlomero unaReparacion
+    | esMalvado unPlomero     = agregaHerramienta (Herramienta "Destornillador" 0 Plastico) unPlomero
+    | esDificil unaReparacion = mapHerramienta (filter $ not.esBuenaHerramienta) unPlomero
+    | otherwise               = mapHerramienta tail' unPlomero
+
+
+tail' :: [a] -> [a]
+tail' [] = []
+tail' (x:xs) = xs
