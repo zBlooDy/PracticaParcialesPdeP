@@ -1,3 +1,4 @@
+import Text.Show.Functions
 
 -- Punto 1) ======================
 
@@ -9,8 +10,9 @@ data Artefacto = Artefacto {
 data Heroe = Heroe {
     epiteto :: String,
     reconocimiento :: Int,
-    artefactos :: [Artefacto]
-} deriving (Eq,Show)
+    artefactos :: [Artefacto],
+    tareas :: [Heroe -> Heroe]
+} deriving (Show)
 
 -- Punto 2) ================================
 
@@ -27,16 +29,6 @@ mapArtefacto :: ([Artefacto] -> [Artefacto]) -> Heroe -> Heroe
 mapArtefacto f unHeroe = unHeroe {artefactos = f $ artefactos unHeroe} 
 
 
-sube = Artefacto {
-    nombre = "La poderosa Sube",
-    rareza = 9000
-}
-
-rocko = Heroe {
-    epiteto = "Rockito",
-    reconocimiento = 700,
-    artefactos = [sube]
-}
 
 paseALaHistoria :: Heroe -> Heroe
 paseALaHistoria unHeroe 
@@ -47,3 +39,50 @@ paseALaHistoria unHeroe
     where
         reconomientoDeHeroe = reconocimiento unHeroe
 
+-- Punto 3) ================================
+
+-- <- Encontrar un artefacto ->
+encontrarUnArtefacto :: Artefacto -> Heroe -> Heroe
+encontrarUnArtefacto unArtefacto  = sumaReconocimiento (rareza unArtefacto) . agregaArtefacto unArtefacto 
+
+sumaReconocimiento :: Int -> Heroe -> Heroe
+sumaReconocimiento unReconocimiento = mapReconocimiento (+ unReconocimiento)
+
+mapReconocimiento :: (Int -> Int) -> Heroe -> Heroe
+mapReconocimiento f unHeroe = unHeroe {reconocimiento = f $ reconocimiento unHeroe}
+
+-- <- Escalar el olimpo ->
+
+escalarOlimpo :: Heroe -> Heroe
+escalarOlimpo = agregaArtefacto (Artefacto "El relampago de Zeus" 500) . desechaArtefactos . triplicaRareza . sumaReconocimiento 500 
+
+mapRarezaArtefacto :: (Int -> Int) -> Artefacto -> Artefacto
+mapRarezaArtefacto f unArtefacto = unArtefacto {rareza = f $ rareza unArtefacto }
+
+triplicaRareza :: Heroe -> Heroe
+triplicaRareza = mapArtefacto (map (mapRarezaArtefacto (*3)))
+
+desechaArtefactos :: Heroe -> Heroe
+desechaArtefactos = mapArtefacto (filter ((>1000) . rareza))
+
+-- <- Ayudar a cruzar la calle ->
+
+rocko = Heroe {
+    epiteto = "rocko",
+    reconocimiento = 1000,
+    artefactos = [],
+    tareas = []
+}
+
+ayudarACruzarCalle :: Int -> Heroe -> Heroe
+ayudarACruzarCalle cantidadCalles = cambiaEpiteto ("Gros" ++ replicate cantidadCalles 'o')
+
+data Bestia = Bestia {
+    nombreBestia :: String,
+    debilidad :: Heroe -> Bool
+}
+
+matarUnaBestia :: Bestia -> Heroe -> Heroe
+matarUnaBestia unaBestia unHeroe
+    | debilidad unaBestia unHeroe = cambiaEpiteto ("El asesino de " ++ nombreBestia unaBestia) unHeroe
+    | otherwise                   = cambiaEpiteto "El cobarde" . mapArtefacto (drop 1) $ unHeroe
