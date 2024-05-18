@@ -53,8 +53,13 @@ mapReconocimiento f unHeroe = unHeroe {reconocimiento = f $ reconocimiento unHer
 
 -- <- Escalar el olimpo ->
 
+relampagoZeus = Artefacto {
+    nombre = "El relampago de Zeus",
+    rareza = 500
+}
+
 escalarOlimpo :: Heroe -> Heroe
-escalarOlimpo = agregaArtefacto (Artefacto "El relampago de Zeus" 500) . desechaArtefactos . triplicaRareza . sumaReconocimiento 500 
+escalarOlimpo = agregaArtefacto relampagoZeus . desechaArtefactos . triplicaRareza . sumaReconocimiento 500 
 
 mapRarezaArtefacto :: (Int -> Int) -> Artefacto -> Artefacto
 mapRarezaArtefacto f unArtefacto = unArtefacto {rareza = f $ rareza unArtefacto }
@@ -86,3 +91,26 @@ matarUnaBestia :: Bestia -> Heroe -> Heroe
 matarUnaBestia unaBestia unHeroe
     | debilidad unaBestia unHeroe = cambiaEpiteto ("El asesino de " ++ nombreBestia unaBestia) unHeroe
     | otherwise                   = cambiaEpiteto "El cobarde" . mapArtefacto (drop 1) $ unHeroe
+
+-- Punto 4) ================================
+
+heracles = Heroe {
+    epiteto = "Guardian del Olimpo",
+    reconocimiento = 700,
+    artefactos = [relampagoZeus, Artefacto "Pistola" 1000],
+    tareas = [matarLeonNemea]
+}
+
+-- Punto 5) ================================
+
+leonNemea :: Bestia
+leonNemea = Bestia {
+    nombreBestia = "Leon de Nemea",
+    debilidad = epitetoMayorVeinte 
+}
+
+epitetoMayorVeinte :: Heroe -> Bool
+epitetoMayorVeinte = (>20) . length . epiteto 
+
+matarLeonNemea :: Heroe -> Heroe
+matarLeonNemea = matarUnaBestia leonNemea  
