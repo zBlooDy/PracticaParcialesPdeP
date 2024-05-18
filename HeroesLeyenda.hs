@@ -114,3 +114,28 @@ epitetoMayorVeinte = (>20) . length . epiteto
 
 matarLeonNemea :: Heroe -> Heroe
 matarLeonNemea = matarUnaBestia leonNemea  
+
+-- Punto 6) ================================
+agregarTarea :: (Heroe -> Heroe) -> Heroe -> Heroe
+agregarTarea unaTarea = mapTareas (unaTarea :)
+
+mapTareas :: ([Heroe -> Heroe] -> [Heroe -> Heroe]) -> Heroe -> Heroe
+mapTareas f unHeroe = unHeroe {tareas = f $ tareas unHeroe}
+
+hacerUnaTarea ::  Heroe -> (Heroe -> Heroe) -> Heroe
+hacerUnaTarea unHeroe unaTarea  = agregarTarea unaTarea . unaTarea $ unHeroe
+
+-- Punto 7) ================================
+presumenLogros :: Heroe -> Heroe -> (Heroe, Heroe)
+presumenLogros unHeroe otroHeroe
+    | reconocimiento unHeroe > reconocimiento otroHeroe     = (unHeroe , otroHeroe)
+    | reconocimiento unHeroe < reconocimiento otroHeroe     = (otroHeroe , unHeroe)
+    | sumatoriaRarezas unHeroe > sumatoriaRarezas otroHeroe =  (unHeroe , otroHeroe)
+    | sumatoriaRarezas unHeroe < sumatoriaRarezas otroHeroe =  (otroHeroe , unHeroe)
+    | otherwise                                             = presumenLogros (realizanTareasDelOtro unHeroe otroHeroe) (realizanTareasDelOtro otroHeroe unHeroe)
+
+sumatoriaRarezas :: Heroe -> Int
+sumatoriaRarezas unHeroe = sum (map rareza $ artefactos unHeroe)
+
+realizanTareasDelOtro :: Heroe -> Heroe -> Heroe
+realizanTareasDelOtro heroe1 heroe2 = foldl hacerUnaTarea heroe1 (tareas heroe2)
