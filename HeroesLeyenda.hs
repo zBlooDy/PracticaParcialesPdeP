@@ -72,12 +72,6 @@ desechaArtefactos = mapArtefacto (filter ((>1000) . rareza))
 
 -- <- Ayudar a cruzar la calle ->
 
-rocko = Heroe {
-    epiteto = "rocko",
-    reconocimiento = 1000,
-    artefactos = [],
-    tareas = []
-}
 
 ayudarACruzarCalle :: Int -> Heroe -> Heroe
 ayudarACruzarCalle cantidadCalles = cambiaEpiteto ("Gros" ++ replicate cantidadCalles 'o')
@@ -94,6 +88,7 @@ matarUnaBestia unaBestia unHeroe
 
 -- Punto 4) ================================
 
+heracles :: Heroe
 heracles = Heroe {
     epiteto = "Guardian del Olimpo",
     reconocimiento = 700,
@@ -139,3 +134,17 @@ sumatoriaRarezas unHeroe = sum (map rareza $ artefactos unHeroe)
 
 realizanTareasDelOtro :: Heroe -> Heroe -> Heroe
 realizanTareasDelOtro heroe1 heroe2 = foldl hacerUnaTarea heroe1 (tareas heroe2)
+
+-- Punto 8) ================================
+
+    --No va a devolver ningun resultado, ya que, se va a quedar evaluando constantemente por el ultimo caso en el que realizan las tareas del otro
+
+-- Punto 9) ================================
+
+type Labor = [Heroe -> Heroe]
+
+realizarUnaLabor :: Heroe -> Labor -> Heroe
+realizarUnaLabor = foldl hacerUnaTarea 
+
+-- Punto 10) ================================
+    -- No, ya que se va a quedar evaluando constantemente y nunca va a poder arrojar un resultado.
