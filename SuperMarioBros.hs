@@ -144,3 +144,35 @@ cambiaHerramientas unPlomero unaReparacion
 tail' :: [a] -> [a]
 tail' [] = []
 tail' (x:xs) = xs
+
+-- PUNTO 7 ======================================================
+
+jornadaDeTrabajo :: [Reparacion] -> Plomero -> Plomero
+jornadaDeTrabajo listaReparaciones unPlomero = foldl hacerUnaReparacion unPlomero listaReparaciones
+
+
+-- PUNTO 8 ======================================================
+
+maximumBy :: Ord b => (a -> b) -> [a] -> a
+maximumBy = foldl1 . maxBy
+
+maxBy :: Ord b => (a -> b) -> a -> a -> a
+maxBy f x y
+  | f x > f y = x
+  | otherwise = y
+
+empleadoMas :: (Ord a) => (Plomero -> a) -> [Reparacion] -> [Plomero] -> Plomero
+empleadoMas criterio listaReparaciones =  maximumBy (criterio . jornadaDeTrabajo listaReparaciones)
+
+--a)
+empleadoMasReparador :: [Reparacion] -> [Plomero] -> Plomero
+empleadoMasReparador  = empleadoMas (length . historialReparaciones)
+
+--b)
+empleadoMasAdinerado :: [Reparacion] -> [Plomero] -> Plomero
+empleadoMasAdinerado = empleadoMas cantidadDinero
+
+--c)
+
+empleadoMasInversor :: [Reparacion] -> [Plomero] -> Plomero
+empleadoMasInversor = empleadoMas (sum . map precio . cajaDeHerramientas)
