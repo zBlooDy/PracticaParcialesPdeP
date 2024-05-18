@@ -55,9 +55,6 @@ wario = Plomero {
     cantidadDinero = 0.5
 }
 
-
--- Falta Wario que parece que hay que usar una lista infinita
-
 -- PUNTO 2 ======================================================
 
 tieneHerramienta :: Herramienta -> Plomero -> Bool
