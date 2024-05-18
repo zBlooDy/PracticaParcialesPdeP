@@ -48,6 +48,13 @@ mario = Plomero {
     cantidadDinero = 1200
 }
 
+wario = Plomero {
+    nombre = "Wario",
+    cajaDeHerramientas = repeat llaveFrancesa,
+    historialReparaciones = [],
+    cantidadDinero = 0.5
+}
+
 
 -- Falta Wario que parece que hay que usar una lista infinita
 
