@@ -130,3 +130,12 @@ produccionMasEfectiva (produccion1:produccion2:producciones) unaSerie
 --  b) Si, se puede aplicar conFavoritismos. En mi ejemplo agrego los favoritos al principio, en cambio si se agregarian al final de la lista seria un problema ya que se va a quedar buscando el final de la lista para concatenarlos
 
 
+-------------
+-- Punto 6 --
+-------------
+esControvertida :: Serie -> Bool
+esControvertida unaSerie = sueldosMenorAMayor (actores unaSerie)
+
+sueldosMenorAMayor :: [Actor] -> Bool
+sueldosMenorAMayor (x:y:xs) = sueldoAnual x < sueldoAnual y && sueldosMenorAMayor (y:xs)
+
