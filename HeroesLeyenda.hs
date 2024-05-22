@@ -113,29 +113,30 @@ leonNemea = Bestia {
   
 
 -- Punto 6) ================================
-agregarTarea :: (Heroe -> Heroe) -> Heroe -> Heroe
+agregarTarea :: Tarea -> Heroe -> Heroe
 agregarTarea unaTarea = mapTareas (unaTarea :)
 
-mapTareas :: ([Heroe -> Heroe] -> [Heroe -> Heroe]) -> Heroe -> Heroe
+mapTareas :: ([Tarea] -> [Tarea]) -> Heroe -> Heroe
 mapTareas f unHeroe = unHeroe {tareas = f $ tareas unHeroe}
 
-hacerUnaTarea ::  Heroe -> (Heroe -> Heroe) -> Heroe
+hacerUnaTarea ::  Heroe -> Tarea -> Heroe
 hacerUnaTarea unHeroe unaTarea  = agregarTarea unaTarea . unaTarea $ unHeroe
 
 -- Punto 7) ================================
 presumenLogros :: Heroe -> Heroe -> (Heroe, Heroe)
 presumenLogros unHeroe otroHeroe
-    | reconocimiento unHeroe > reconocimiento otroHeroe     = (unHeroe , otroHeroe)
-    | reconocimiento unHeroe < reconocimiento otroHeroe     = (otroHeroe , unHeroe)
-    | sumatoriaRarezas unHeroe > sumatoriaRarezas otroHeroe =  (unHeroe , otroHeroe)
-    | sumatoriaRarezas unHeroe < sumatoriaRarezas otroHeroe =  (otroHeroe , unHeroe)
-    | otherwise                                             = presumenLogros (realizanTareasDelOtro unHeroe otroHeroe) (realizanTareasDelOtro otroHeroe unHeroe)
+    | gana unHeroe otroHeroe  = (unHeroe, otroHeroe)
+    | gana otroHeroe unHeroe  = (otroHeroe, unHeroe)
+    | otherwise               = presumenLogros (realizanTareasDelOtro unHeroe otroHeroe) (realizanTareasDelOtro otroHeroe unHeroe)
+
+gana :: Heroe -> Heroe -> Bool
+gana ganador perdedor = reconocimiento ganador > reconocimiento perdedor || reconocimiento ganador == reconocimiento perdedor && sumatoriaRarezas ganador > sumatoriaRarezas perdedor
 
 sumatoriaRarezas :: Heroe -> Int
 sumatoriaRarezas (Heroe _ _ artefactos _) = sum $ map rareza artefactos
 
 realizanTareasDelOtro :: Heroe -> Heroe -> Heroe
-realizanTareasDelOtro heroe1 heroe2 = foldl hacerUnaTarea heroe1 (tareas heroe2)
+realizanTareasDelOtro heroe1 heroe2 = realizarUnaLabor heroe1 (tareas heroe2)
 
 -- Punto 8) ================================
 
