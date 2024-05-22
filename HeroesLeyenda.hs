@@ -11,16 +11,17 @@ data Heroe = Heroe {
     epiteto :: String,
     reconocimiento :: Int,
     artefactos :: [Artefacto],
-    tareas :: [Heroe -> Heroe]
+    tareas :: [Tarea]
 } deriving (Show)
+
+
+type Tarea = Heroe -> Heroe
 
 -- Punto 2) ================================
 
 cambiaEpiteto :: String -> Heroe -> Heroe
-cambiaEpiteto nuevoEpiteto  = mapEpiteto (const nuevoEpiteto)
+cambiaEpiteto nuevoEpiteto unHeroe = unHeroe {epiteto = nuevoEpiteto}
 
-mapEpiteto :: (String -> String) -> Heroe -> Heroe
-mapEpiteto f unHeroe = unHeroe {epiteto = f $ epiteto unHeroe}
 
 agregaArtefacto :: Artefacto -> Heroe -> Heroe
 agregaArtefacto nuevoArtefacto = mapArtefacto (nuevoArtefacto :) 
@@ -46,7 +47,7 @@ encontrarUnArtefacto :: Artefacto -> Heroe -> Heroe
 encontrarUnArtefacto unArtefacto  = sumaReconocimiento (rareza unArtefacto) . agregaArtefacto unArtefacto 
 
 sumaReconocimiento :: Int -> Heroe -> Heroe
-sumaReconocimiento unReconocimiento = mapReconocimiento (+ unReconocimiento)
+sumaReconocimiento unReconocimiento = mapReconocimiento (unReconocimiento +)
 
 mapReconocimiento :: (Int -> Int) -> Heroe -> Heroe
 mapReconocimiento f unHeroe = unHeroe {reconocimiento = f $ reconocimiento unHeroe}
@@ -93,7 +94,7 @@ heracles = Heroe {
     epiteto = "Guardian del Olimpo",
     reconocimiento = 700,
     artefactos = [relampagoZeus, Artefacto "Pistola" 1000],
-    tareas = [matarLeonNemea]
+    tareas = [matarUnaBestia leonNemea]
 }
 
 -- Punto 5) ================================
@@ -101,14 +102,9 @@ heracles = Heroe {
 leonNemea :: Bestia
 leonNemea = Bestia {
     nombreBestia = "Leon de Nemea",
-    debilidad = epitetoMayorVeinte 
+    debilidad = (>20) . length . epiteto 
 }
-
-epitetoMayorVeinte :: Heroe -> Bool
-epitetoMayorVeinte = (>20) . length . epiteto 
-
-matarLeonNemea :: Heroe -> Heroe
-matarLeonNemea = matarUnaBestia leonNemea  
+  
 
 -- Punto 6) ================================
 agregarTarea :: (Heroe -> Heroe) -> Heroe -> Heroe
