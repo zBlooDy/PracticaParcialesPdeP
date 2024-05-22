@@ -43,7 +43,7 @@ paseALaHistoria unHeroe
 -- Punto 3) ================================
 
 -- <- Encontrar un artefacto ->
-encontrarUnArtefacto :: Artefacto -> Heroe -> Heroe
+encontrarUnArtefacto :: Artefacto -> Tarea
 encontrarUnArtefacto unArtefacto  = sumaReconocimiento (rareza unArtefacto) . agregaArtefacto unArtefacto 
 
 sumaReconocimiento :: Int -> Heroe -> Heroe
@@ -54,19 +54,23 @@ mapReconocimiento f unHeroe = unHeroe {reconocimiento = f $ reconocimiento unHer
 
 -- <- Escalar el olimpo ->
 
+relampagoZeus :: Artefacto
 relampagoZeus = Artefacto {
     nombre = "El relampago de Zeus",
     rareza = 500
 }
 
-escalarOlimpo :: Heroe -> Heroe
-escalarOlimpo = agregaArtefacto relampagoZeus . desechaArtefactos . triplicaRareza . sumaReconocimiento 500 
+escalarOlimpo :: Tarea
+escalarOlimpo = agregaArtefacto relampagoZeus . desechaArtefactos . triplicaRarezaArtefactos . sumaReconocimiento 500 
 
 mapRarezaArtefacto :: (Int -> Int) -> Artefacto -> Artefacto
 mapRarezaArtefacto f unArtefacto = unArtefacto {rareza = f $ rareza unArtefacto }
 
-triplicaRareza :: Heroe -> Heroe
-triplicaRareza = mapArtefacto (map (mapRarezaArtefacto (*3)))
+triplicaRarezaArtefactos :: Heroe -> Heroe
+triplicaRarezaArtefactos = mapArtefacto (map triplicaRarezaArtefacto)
+
+triplicaRarezaArtefacto :: Artefacto -> Artefacto
+triplicaRarezaArtefacto unArtefacto = unArtefacto {rareza = (*3) . rareza $ unArtefacto}
 
 desechaArtefactos :: Heroe -> Heroe
 desechaArtefactos = mapArtefacto (filter ((>1000) . rareza))
@@ -74,17 +78,19 @@ desechaArtefactos = mapArtefacto (filter ((>1000) . rareza))
 -- <- Ayudar a cruzar la calle ->
 
 
-ayudarACruzarCalle :: Int -> Heroe -> Heroe
+ayudarACruzarCalle :: Int -> Tarea
 ayudarACruzarCalle cantidadCalles = cambiaEpiteto ("Gros" ++ replicate cantidadCalles 'o')
 
 data Bestia = Bestia {
     nombreBestia :: String,
-    debilidad :: Heroe -> Bool
+    debilidad :: Debilidad
 }
 
-matarUnaBestia :: Bestia -> Heroe -> Heroe
-matarUnaBestia unaBestia unHeroe
-    | debilidad unaBestia unHeroe = cambiaEpiteto ("El asesino de " ++ nombreBestia unaBestia) unHeroe
+type Debilidad = Heroe -> Bool
+
+matarUnaBestia :: Bestia -> Tarea
+matarUnaBestia (Bestia nombreBestia debilidad) unHeroe
+    | debilidad unHeroe = cambiaEpiteto ("El asesino de " ++ nombreBestia) unHeroe
     | otherwise                   = cambiaEpiteto "El cobarde" . mapArtefacto (drop 1) $ unHeroe
 
 -- Punto 4) ================================
@@ -126,7 +132,7 @@ presumenLogros unHeroe otroHeroe
     | otherwise                                             = presumenLogros (realizanTareasDelOtro unHeroe otroHeroe) (realizanTareasDelOtro otroHeroe unHeroe)
 
 sumatoriaRarezas :: Heroe -> Int
-sumatoriaRarezas unHeroe = sum (map rareza $ artefactos unHeroe)
+sumatoriaRarezas (Heroe _ _ artefactos _) = sum $ map rareza artefactos
 
 realizanTareasDelOtro :: Heroe -> Heroe -> Heroe
 realizanTareasDelOtro heroe1 heroe2 = foldl hacerUnaTarea heroe1 (tareas heroe2)
