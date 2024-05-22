@@ -105,3 +105,17 @@ bienestarSegunActores :: Serie -> Int
 bienestarSegunActores (Serie _ actores _ _ _ _)
     | (<10) . length  $ actores = 3
     | otherwise                 = 10 - actoresConXRestricciones 2 actores  
+
+-------------
+-- Punto 4 --
+-------------
+
+aplicaSeriesEfectivas :: [Serie] -> [Produccion] -> [Serie]
+aplicaSeriesEfectivas listaSeries listaProductores = map (produccionMasEfectiva listaProductores)  listaSeries 
+
+
+produccionMasEfectiva :: [Produccion] -> Serie -> Serie
+produccionMasEfectiva [produccion] unaSerie = produccion unaSerie
+produccionMasEfectiva (produccion1:produccion2:producciones) unaSerie
+    | bienestarTotalSerie (produccion1 unaSerie) > bienestarTotalSerie (produccion2 unaSerie) = produccionMasEfectiva (produccion1:producciones) unaSerie
+    | otherwise = produccion2 unaSerie
