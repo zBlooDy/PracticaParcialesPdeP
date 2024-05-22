@@ -119,3 +119,14 @@ produccionMasEfectiva [produccion] unaSerie = produccion unaSerie
 produccionMasEfectiva (produccion1:produccion2:producciones) unaSerie
     | bienestarTotalSerie (produccion1 unaSerie) > bienestarTotalSerie (produccion2 unaSerie) = produccionMasEfectiva (produccion1:producciones) unaSerie
     | otherwise = produccion2 unaSerie
+
+
+-------------
+-- Punto 5 --
+-------------
+
+--  a) Si, se puede aplicar ya que el productor gatopardeitor no realiza ninguna operacion relacionada a los actores de una Serie
+
+--  b) Si, se puede aplicar conFavoritismos. En mi ejemplo agrego los favoritos al principio, en cambio si se agregarian al final de la lista seria un problema ya que se va a quedar buscando el final de la lista para concatenarlos
+
+
