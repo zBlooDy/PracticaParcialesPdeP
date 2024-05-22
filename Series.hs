@@ -26,10 +26,10 @@ sumaSueldos :: [Actor] -> Int
 sumaSueldos listaDeActores = sum (map sueldoAnual listaDeActores)
 
 esProblematica :: Serie -> Bool
-esProblematica unaSerie = (>3) . length . actoresConMasDeUnaRestriccion $ actores unaSerie 
+esProblematica unaSerie = (>3) .  actoresConXRestricciones 2 $ actores unaSerie 
 
-actoresConMasDeUnaRestriccion :: [Actor] -> [Actor]
-actoresConMasDeUnaRestriccion  = filter ((>1) . length . restricciones)
+actoresConXRestricciones :: Int -> [Actor] -> Int
+actoresConXRestricciones cantidad = length . filter ((>= cantidad) . length . restricciones)
 
 -------------
 -- Punto 2 --
@@ -85,3 +85,23 @@ canceleitor :: Float -> Produccion
 canceleitor cifra unaSerie 
     | estaEnRojo unaSerie || ratingPromedio unaSerie < cifra  = unaSerie {cancelada = True}
     | otherwise                                               = unaSerie
+
+-------------
+-- Punto 3 --
+-------------
+
+bienestarSerie :: Serie -> Int
+bienestarSerie (Serie _ _ _ _ _ True) = 0
+
+bienestarTotalSerie :: Serie -> Int
+bienestarTotalSerie unaSerie = bienestarSegunTemporadas unaSerie + bienestarSegunActores unaSerie 
+
+bienestarSegunTemporadas :: Serie -> Int
+bienestarSegunTemporadas (Serie _ _ cantidadTemporadas _ _ _) 
+    | (>4)  cantidadTemporadas  = 5
+    | otherwise                 = (10 - cantidadTemporadas) * 2
+
+bienestarSegunActores :: Serie -> Int
+bienestarSegunActores (Serie _ actores _ _ _ _)
+    | (<10) . length  $ actores = 3
+    | otherwise                 = 10 - actoresConXRestricciones 2 actores  
