@@ -139,3 +139,15 @@ esControvertida unaSerie = sueldosMenorAMayor (actores unaSerie)
 sueldosMenorAMayor :: [Actor] -> Bool
 sueldosMenorAMayor (x:y:xs) = sueldoAnual x < sueldoAnual y && sueldosMenorAMayor (y:xs)
 
+-------------
+-- Punto 7 --
+-------------
+
+funcionLoca x y z= filter (even . x) . map (length.y)  $ z
+
+-- La funcion x va a recibir un entero, porque recibe una lista de enteros y va a devolver un valor el cual debe poder verificarse que sea Par
+-- La funcion y tiene que recibe un valor del tipo de la lista y tiene que devolver una lista, por el hecho de que length trabaja con listas
+-- El parametro z va a ser una lista de cualquier cosa
+-- El resultado de la funcion va a ser una lista de enteros ya que lo ultimo que hace es filtrar por los pares.
+
+-- funcionLoca :: (Integral b) => (Int -> b) -> ( a -> [b] ) -> [a] -> [Int]
