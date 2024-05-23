@@ -1,3 +1,5 @@
+import Text.Show.Functions
+
 data Serie = Serie {
     nombreSerie :: String,
     actores :: [Actor],
@@ -5,13 +7,13 @@ data Serie = Serie {
     cantidadTemporadas :: Int,
     ratingPromedio :: Float,
     cancelada :: Bool
-}
+} deriving(Show)
 
 data Actor = Actor {
     nombreActor :: String,
     sueldoAnual :: Int,
     restricciones :: [Restriccion]
-}
+}deriving(Show)
 
 type Restriccion = Actor -> Bool
 
@@ -111,14 +113,14 @@ bienestarSegunActores (Serie _ actores _ _ _ _)
 -------------
 
 aplicaSeriesEfectivas :: [Serie] -> [Produccion] -> [Serie]
-aplicaSeriesEfectivas listaSeries listaProductores = map (produccionMasEfectiva listaProductores)  listaSeries 
+aplicaSeriesEfectivas listaSeries listaProductores = map (produccionMasEfectiva listaProductores) listaSeries 
 
 
 produccionMasEfectiva :: [Produccion] -> Serie -> Serie
 produccionMasEfectiva [produccion] unaSerie = produccion unaSerie
 produccionMasEfectiva (produccion1:produccion2:producciones) unaSerie
-    | bienestarTotalSerie (produccion1 unaSerie) > bienestarTotalSerie (produccion2 unaSerie) = produccionMasEfectiva (produccion1:producciones) unaSerie
-    | otherwise = produccion2 unaSerie
+    | bienestarTotalSerie (produccion1 unaSerie) <= bienestarTotalSerie (produccion2 unaSerie) = produccionMasEfectiva (produccion2:producciones) unaSerie
+    | otherwise = produccion1 unaSerie
 
 
 -------------
