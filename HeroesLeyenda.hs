@@ -63,14 +63,12 @@ relampagoZeus = Artefacto {
 escalarOlimpo :: Tarea
 escalarOlimpo = agregaArtefacto relampagoZeus . desechaArtefactos . triplicaRarezaArtefactos . sumaReconocimiento 500 
 
-mapRarezaArtefacto :: (Int -> Int) -> Artefacto -> Artefacto
-mapRarezaArtefacto f unArtefacto = unArtefacto {rareza = f $ rareza unArtefacto }
 
 triplicaRarezaArtefactos :: Heroe -> Heroe
-triplicaRarezaArtefactos = mapArtefacto (map triplicaRarezaArtefacto)
+triplicaRarezaArtefactos = mapArtefacto (map triplicarRareza)
 
-triplicaRarezaArtefacto :: Artefacto -> Artefacto
-triplicaRarezaArtefacto unArtefacto = unArtefacto {rareza = (*3) . rareza $ unArtefacto}
+triplicarRareza :: Artefacto -> Artefacto
+triplicarRareza unArtefacto = unArtefacto {rareza = (*3) . rareza $ unArtefacto}
 
 desechaArtefactos :: Heroe -> Heroe
 desechaArtefactos = mapArtefacto (filter ((>1000) . rareza))
