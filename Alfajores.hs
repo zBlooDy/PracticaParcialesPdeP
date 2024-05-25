@@ -1,3 +1,4 @@
+import Data.List (isInfixOf)
 
 ---------------
 ----Parte 1----
@@ -8,9 +9,9 @@ data Alfajor = Alfajor {
     dulzor :: Float,
     peso :: Float,
     relleno :: [Relleno]
-}
+}deriving(Show)
 
-data Relleno = DulceDeLeche | Mousse | Fruta deriving (Eq)
+data Relleno = DulceDeLeche | Mousse | Fruta deriving (Eq,Show)
 
 
 jorgito :: Alfajor
@@ -31,7 +32,7 @@ havanna = Alfajor {
 
 capitanDelEspacio :: Alfajor
 capitanDelEspacio = Alfajor {
-    nombre = "Capitan del espacio",
+    nombre = "Capitan del espacio papu",
     dulzor = 12,
     peso = 40,
     relleno = [DulceDeLeche]
@@ -116,3 +117,83 @@ jorgelin = renombrarAlfajor "Jorgelin" . agregarCapaDeRelleno DulceDeLeche $ jor
 capitanDelEspacioCostaACosta :: Alfajor
 capitanDelEspacioCostaACosta = renombrarAlfajor "Capitán del espacio de costa a costa" . hacerPremiumVariasVeces 4 . abaratarAlfajor $ capitanDelEspacio
 
+---------------
+----Parte 3----
+---------------
+
+data Cliente = Cliente {
+    nombreCliente :: String,
+    dinero :: Float,
+    alfajoresComprados :: [Alfajor],
+    criterios :: Criterio
+}
+
+type Criterio = Alfajor -> Bool
+
+
+emi :: Cliente
+emi = Cliente {
+    nombreCliente = "Emi",
+    dinero = 120,
+    alfajoresComprados = [],
+    criterios = isInfixOf "Capitan del espacio" . nombre
+}
+
+tomi :: Cliente
+tomi = Cliente {
+    nombreCliente = "Tomi",
+    dinero = 100,
+    alfajoresComprados = [],
+    criterios = criteriosTomi
+}
+
+criteriosTomi :: Criterio
+criteriosTomi unAlfajor = pretencioso unAlfajor && dulcero unAlfajor
+
+pretencioso :: Criterio
+pretencioso = isInfixOf "premium" . nombre
+
+dulcero :: Criterio
+dulcero = (>0.15) . coeficienteDulzor
+
+dante :: Cliente
+dante = Cliente {
+    nombreCliente = "Dante",
+    dinero = 200,
+    alfajoresComprados = [],
+    criterios = criteriosDante
+}
+
+criteriosDante :: Criterio
+criteriosDante unAlfajor = (not.esPotable $ unAlfajor) && (notElem DulceDeLeche . relleno) unAlfajor
+
+juan :: Cliente
+juan = Cliente {
+    nombreCliente = "Juan",
+    dinero = 500,
+    alfajoresComprados = [],
+    criterios = criteriosJuan
+}
+
+criteriosJuan :: Criterio
+criteriosJuan unAlfajor = pretencioso unAlfajor && dulcero unAlfajor && (notElem Mousse . relleno $ unAlfajor) && (isInfixOf "Jorgito" . nombre $ unAlfajor)
+
+
+
+cualesLeGustanA :: Cliente -> [Alfajor] -> [Alfajor]
+cualesLeGustanA unCliente = filter (criterios unCliente) 
+
+
+comprarUnAlfajor :: Cliente -> Alfajor -> Cliente
+comprarUnAlfajor unCliente unAlfajor
+    | dinero unCliente >= precioDeUnAlfajor unAlfajor = quitaDinero (precioDeUnAlfajor unAlfajor) . agregaAlfajor unAlfajor $ unCliente
+    | otherwise                                       = unCliente
+
+quitaDinero ::  Float -> Cliente -> Cliente
+quitaDinero unDinero unCliente = unCliente {dinero = dinero unCliente - unDinero}
+
+agregaAlfajor :: Alfajor -> Cliente -> Cliente
+agregaAlfajor unAlfajor unCliente = unCliente {alfajoresComprados = unAlfajor : alfajoresComprados unCliente}
+
+comprarDeUnaLista :: [Alfajor] -> Cliente -> Cliente
+comprarDeUnaLista listaDeAlfajores unCliente = foldl comprarUnAlfajor unCliente (cualesLeGustanA unCliente listaDeAlfajores)
