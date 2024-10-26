@@ -91,3 +91,18 @@ Enunciado Vacaciones : https://docs.google.com/document/d/1VPvQQQJwVH20ziLA-96Hy
 Enunciado Casas de Hogwarts : https://docs.google.com/document/d/e/2PACX-1vR9SBhz2J3lmqcMXOBs1BzSt7N1YWPoIuubAmQxPIOcnbn5Ow9REYt4NXQzOwXXiUaEQ4hfHNEt3_C7/pub
 
 Enunciado Prolog de la Costa : https://docs.google.com/document/d/1SLYz4txoLYAE4b2jM_vc-U_1L2FMYg-p1zdxjKtVTU0/edit#heading=h.6rnhl8528rg3
+
+
+<h2>Objetos</h2> 
+
+Enunciado ImPdeP : https://docs.google.com/document/d/1Mm_ewFJa3xywHRvWTxR7BIDFl560kzXKCb741RaEFjQ/edit?usp=sharing
+
+Enunciado Gameflix : https://docs.google.com/document/d/1a_na04DHkp65uG_ts5IiLJ2RT3dfkD1Vl_Gw5E_dLUk/edit?usp=sharing 
+
+Enunciado AmongUs : https://docs.google.com/document/d/11YZQWd0RiAEKgij7ME3641xl5j1oL7_SBLxbpb2AwVw
+
+Enunciado Navidad : https://drive.google.com/file/d/1hos8ruaxpqOj6f5-h_XWbdWp2zCJVat2/view
+
+Enunciado Jaloguin : https://docs.google.com/document/d/1BCk7rsV2bUK25z_lGvYSZ4anjo-xJR5l6kILDwO_4gE/edit?usp=sharing
+
+Enunciado AngryBirds : https://docs.google.com/document/d/1NdG0wsXQq8d6U9WICOgYWKA7tdxB_THV2MCc02_bFu8/edit?usp=sharing
