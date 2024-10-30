@@ -106,3 +106,5 @@ Enunciado Navidad : https://drive.google.com/file/d/1hos8ruaxpqOj6f5-h_XWbdWp2zC
 Enunciado Jaloguin : https://docs.google.com/document/d/1BCk7rsV2bUK25z_lGvYSZ4anjo-xJR5l6kILDwO_4gE/edit?usp=sharing
 
 Enunciado AngryBirds : https://docs.google.com/document/d/1NdG0wsXQq8d6U9WICOgYWKA7tdxB_THV2MCc02_bFu8/edit?usp=sharing
+
+Enunciado Yaar : https://docs.google.com/document/d/1DgWCoxFuYhSbX1n4fuXa7An-LLa0KGL-AtgOhQjwMco/edit?usp=sharing
