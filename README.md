@@ -110,3 +110,5 @@ Enunciado AngryBirds : https://docs.google.com/document/d/1NdG0wsXQq8d6U9WICOgYW
 Enunciado Yaar : https://docs.google.com/document/d/1DgWCoxFuYhSbX1n4fuXa7An-LLa0KGL-AtgOhQjwMco/edit?usp=sharing
 
 Enunciado EscaPdeP : https://docs.google.com/document/d/1jvXI9_BWPEYPXS8IVKkNjK45OOZj-s7UPQRiHu8_BbY/edit?usp=sharing
+
+Enunciado Catar 2022 : https://www.utnianos.com.ar/foro/attachment.php?aid=22494
