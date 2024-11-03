@@ -114,3 +114,5 @@ Enunciado EscaPdeP : https://docs.google.com/document/d/1jvXI9_BWPEYPXS8IVKkNjK4
 Enunciado Catar 2022 : https://www.utnianos.com.ar/foro/attachment.php?aid=22494
 
 Enunciado ElPadrino : https://www.utnianos.com.ar/foro/attachment.php?aid=20212
+
+Enunciado For Sale : https://docs.google.com/document/d/1cdzJHCvm-1ODtgBfJPmYA1dS4W7YKCN-RPKj12NSafY/edit?tab=t.0
