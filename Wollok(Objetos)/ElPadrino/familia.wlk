@@ -9,11 +9,13 @@ class Familia {
     method integrantesVivos() = integrantes.filter {unIntegrante => ! unIntegrante.estaDurmiendoConLosPeces()} 
 
     // C)
-    method armarALaFamilia() = integrantes.forEach {unIntegrante => unIntegrante.agregarArma(new Revolver(cantidadBalas = 6))}
-
+    method armarALaFamilia() {
+        integrantes.forEach {unIntegrante => unIntegrante.agregarArma(new Revolver(cantidadBalas = 6))}
+    }
     // E)
-    method atacarPorSorpesa(unaFamilia) = integrantes.forEach {unIntegrante => unIntegrante.atacarFamilia(unaFamilia)}
-
+    method atacarPorSorpesa(unaFamilia) {
+        integrantes.forEach {unIntegrante => unIntegrante.atacarFamilia(unaFamilia)}
+    }
     // F)
 
     method reorganizarse() {
