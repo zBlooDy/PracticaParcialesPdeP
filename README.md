@@ -128,3 +128,5 @@ Enunciado Jubilacion : https://docs.google.com/document/d/11XMvYJKG_k45YB83S9_5j
 Enunciado Pokemon : https://docs.google.com/document/u/1/d/e/2PACX-1vQA3YtugLZpe5Vut4sPAEklYY69FCLmqaweIa0POk88faC74NcI656w5yL5YlXVVK0fJFpUPdybFqqr/pub
 
 Enunciado DangerZone : https://docs.google.com/document/d/e/2PACX-1vRFhr0lXZkZoovSdMhpqNr45HMn6NsuRTsQBJXVCDReAqqcvaOtskwIJCV9K7vIbWAXHlF2gFjaQwD9/pub
+
+Enunciado Vikingos : https://docs.google.com/document/d/1Ro0q1xWU2Ujntrc-0lAZPDoufusTkbUSPXp_bkmZ5Hs/edit?usp=sharing
