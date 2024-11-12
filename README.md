@@ -93,7 +93,9 @@ Enunciado Casas de Hogwarts : https://docs.google.com/document/d/e/2PACX-1vR9SBh
 Enunciado Prolog de la Costa : https://docs.google.com/document/d/1SLYz4txoLYAE4b2jM_vc-U_1L2FMYg-p1zdxjKtVTU0/edit#heading=h.6rnhl8528rg3
 
 
-<h2>Objetos</h2> ![](wollok.png)]
+<h2>Objetos</h2> 
+
+![](wollok.png)]
 
 Enunciado ImPdeP : https://docs.google.com/document/d/1Mm_ewFJa3xywHRvWTxR7BIDFl560kzXKCb741RaEFjQ/edit?usp=sharing
 
