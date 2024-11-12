@@ -48,7 +48,7 @@ Enunciado P de Perritos : https://docs.google.com/document/d/19CPV3G8aLJs5AQ6QUu
 
 <h2>Logico</h2> 
 
-![](prolog)]
+![](prolog.png)]
 
 Enunciado Aang : https://docs.google.com/document/d/1Tvfqdj4N23O5NGJbbdBQGiDgMssnKvnhv0e4wkHvUpk/edit
 
